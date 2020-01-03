@@ -21,4 +21,5 @@ public class StoreBean {
 	
 	private String vicinity;
 	
+	private String place_id;
 }

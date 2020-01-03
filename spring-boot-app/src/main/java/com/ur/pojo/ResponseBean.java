@@ -4,6 +4,12 @@ import java.util.List;
 
 import lombok.Data;
 
+/**
+ * 
+ * response for multiples stores
+ *
+ */
+
 @Data
 public class ResponseBean {
 	

@@ -6,17 +6,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ur.pojo.ResponseBean;
+import com.ur.pojo.SingleResponseBean;
 import com.ur.pojo.StoreBean;
-import com.ur.repository.PlaceRepository;
 
 @Service
-public class PlacesServiceImpl implements IPlacesService<StoreBean, Long> {
+public class PlacesServiceImpl implements IPlacesService {
 
 	@Autowired
 	private RestTemplate restTemplate;
 
-	@Autowired
-	private PlaceRepository placeRepository;
+//	@Autowired
+//	private PlaceRepository placeRepository;
 
 	@Override
 	public ResponseBean fetchPlaces() {
@@ -30,9 +30,9 @@ public class PlacesServiceImpl implements IPlacesService<StoreBean, Long> {
 	}
 
 	@Override
-	public boolean addPlaceToPrefferedList(StoreBean storeBean, Long id) {
-		// add this store to store table and link it with user with this id.
-		return false;
+	public SingleResponseBean fetchOnePlace(String placeID) {
+		ResponseEntity<SingleResponseBean> response = restTemplate.getForEntity("https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeID+"&key=AIzaSyD73W9tikguXooD_kM_VhGmh0TDMSuagHY", SingleResponseBean.class);
+		return response.getBody();
 	}
 
 }
