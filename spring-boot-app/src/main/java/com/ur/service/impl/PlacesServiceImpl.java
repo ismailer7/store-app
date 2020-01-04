@@ -1,4 +1,4 @@
-package com.ur.service;
+package com.ur.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ur.pojo.ResponseBean;
 import com.ur.pojo.SingleResponseBean;
-import com.ur.pojo.StoreBean;
+import com.ur.service.IPlacesService;
 
 @Service
 public class PlacesServiceImpl implements IPlacesService {
@@ -20,12 +20,15 @@ public class PlacesServiceImpl implements IPlacesService {
 
 	@Override
 	public ResponseBean fetchPlaces() {
-		ResponseEntity<ResponseBean> response = restTemplate.getForEntity(
+		
+		ResponseEntity<ResponseBean> response = null;
+		ResponseBean responseBean = null;
+		
+		response = restTemplate.getForEntity(
 				"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.1952327,-6.152913&rankby=distance&type=store&key=AIzaSyD73W9tikguXooD_kM_VhGmh0TDMSuagHY",
 				ResponseBean.class);
-		ResponseBean responseBean = response.getBody();
-		responseBean.setPrevious_page_token("previous");
-//		List<StoreBean> stores = responseBean.getResults();
+		responseBean = response.getBody();
+		
 		return responseBean;
 	}
 

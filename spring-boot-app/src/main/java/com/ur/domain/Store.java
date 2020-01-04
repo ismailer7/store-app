@@ -42,13 +42,13 @@ public class Store {
 	private String icon;
 	
 	@Column
-	private boolean isOpen;
+	private boolean open;
 	
 	@ColumnDefault("0")
 	private int rating;
 	
 	@Transient
-	public List<String> getTypes() {
+	public List<String> getTypesList() {
 		return Arrays.asList(this.types.split(","));
 	}
 

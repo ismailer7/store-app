@@ -7,7 +7,7 @@ public interface IPlacesService {
 	
 	ResponseBean fetchPlaces();
 	
-//	boolean addPlaceToPrefferedList(T t, D d);
+//	boolean addPlaceToPrefferedList(StoreBean store);
 	
 	SingleResponseBean fetchOnePlace(String placeID);
 }

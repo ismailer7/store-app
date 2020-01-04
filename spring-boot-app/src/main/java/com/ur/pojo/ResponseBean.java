@@ -15,8 +15,10 @@ public class ResponseBean {
 	
 	private String next_page_token;
 	
-	private String previous_page_token;
-	
 	private List<StoreBean> results;
 	
+	
+	public void addStore(StoreBean store) {
+		this.getResults().add(store);
+	}
 }

@@ -2,14 +2,8 @@ package com.ur.service;
 
 import com.ur.domain.User;
 
-public interface IUserService<T, D> {
+public interface IUserService extends CRUDService<User, Long> {
 	
-	boolean register(T t);
-	
-	User getUser(D d);
-	
-	boolean removeUser(T t);
-	
-	boolean updateUser(D d, T t);
+	User findUserByCredentials(String username, String password);
 	
 }
