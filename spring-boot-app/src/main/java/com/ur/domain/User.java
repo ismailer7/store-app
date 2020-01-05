@@ -46,6 +46,9 @@ public class User {
 	@Column
 	private String roles;
 	
+	@Column
+	private char gender;
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_store", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "store_id") })
 	private List<Store> stores;

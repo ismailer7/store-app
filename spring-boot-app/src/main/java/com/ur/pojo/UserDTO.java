@@ -19,5 +19,8 @@ public class UserDTO {
 	
 	private boolean active;
 	
+	private char gender;
+	
 	private List<StoreDTO> storeDTOList;
+	
 }

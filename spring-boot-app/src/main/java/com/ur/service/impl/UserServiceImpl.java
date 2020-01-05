@@ -49,7 +49,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDTO findUserByCredentials(String username, String password) {
 		User user = userRepository.findUserByUsernameAndPassword(username, password);
-		return userTransformer.toDTO(user);
+		return user == null ? null : userTransformer.toDTO(user);
 	}
 	
 	
