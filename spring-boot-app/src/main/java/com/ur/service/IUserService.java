@@ -11,4 +11,6 @@ public interface IUserService extends CRUDService<UserDTO, Long> {
 	
 	List<StoreDTO> getAllPrefferedStores(Long id);
 	
+	void addToPrefferedList(Long userId, StoreDTO store);
+	
 }

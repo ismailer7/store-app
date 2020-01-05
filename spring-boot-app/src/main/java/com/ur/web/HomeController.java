@@ -68,4 +68,9 @@ public class HomeController {
 	public List<StoreDTO> getAllPrefferedStores(@RequestParam Long id) {
 		return userService.getAllPrefferedStores(id);
 	}
+	
+	@RequestMapping(value = "/add/store")
+	public void addStoreToPrefferedList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
+		userService.addToPrefferedList(id,  storeDto);
+	}
 }

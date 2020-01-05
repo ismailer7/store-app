@@ -11,9 +11,9 @@ import com.ur.domain.Store;
 import com.ur.domain.User;
 import com.ur.pojo.StoreDTO;
 import com.ur.pojo.UserDTO;
+import com.ur.repository.StoreRepository;
 import com.ur.repository.UserRepository;
 import com.ur.service.IUserService;
-import com.ur.service.transformer.StoreTransformer;
 import com.ur.service.transformer.Transformer;
 
 @Service
@@ -21,7 +21,10 @@ public class UserServiceImpl implements IUserService {
 	
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	@Autowired
+	private StoreRepository storeRepository;
+	
 	@Autowired
 	private Transformer<User, UserDTO> userTransformer;
 	
@@ -69,7 +72,13 @@ public class UserServiceImpl implements IUserService {
 		}
 		return storesDto;
 	}
-	
-	
+
+	@Override
+	public void addToPrefferedList(Long userId, StoreDTO storeDto) {
+		User user = userRepository.findById(userId).get();
+		Store store = storeTransformer.toEntity(storeDto);
+		user.getStores().add(store);
+		userRepository.save(user);
+	}
 	
 }
