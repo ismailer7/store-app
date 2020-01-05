@@ -1,5 +1,7 @@
 package com.ur.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ur.pojo.CredentialBean;
 import com.ur.pojo.ResponseBean;
 import com.ur.pojo.SingleResponseBean;
+import com.ur.pojo.StoreDTO;
 import com.ur.pojo.UserDTO;
 import com.ur.service.IPlacesService;
 import com.ur.service.IUserService;
@@ -61,4 +64,8 @@ public class HomeController {
 		return userDto != null ? new ResponseEntity<Boolean>(true, HttpStatus.OK) : new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@GetMapping("/preffered")
+	public List<StoreDTO> getAllPrefferedStores(@RequestParam Long id) {
+		return userService.getAllPrefferedStores(id);
+	}
 }

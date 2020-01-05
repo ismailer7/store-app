@@ -1,8 +1,11 @@
 package com.ur.service.transformer;
 
+import org.springframework.stereotype.Component;
+
 import com.ur.domain.Store;
 import com.ur.pojo.StoreDTO;
 
+@Component
 public class StoreTransformer extends Transformer<Store, StoreDTO>{
 
 	@Override

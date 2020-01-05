@@ -1,14 +1,19 @@
 package com.ur.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ur.domain.Store;
 import com.ur.domain.User;
+import com.ur.pojo.StoreDTO;
 import com.ur.pojo.UserDTO;
 import com.ur.repository.UserRepository;
 import com.ur.service.IUserService;
+import com.ur.service.transformer.StoreTransformer;
 import com.ur.service.transformer.Transformer;
 
 @Service
@@ -19,6 +24,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private Transformer<User, UserDTO> userTransformer;
+	
+	@Autowired
+	private Transformer<Store, StoreDTO> storeTransformer;
 	
 	@Override
 	public UserDTO register(UserDTO userDTO) {
@@ -50,6 +58,16 @@ public class UserServiceImpl implements IUserService {
 	public UserDTO findUserByCredentials(String username, String password) {
 		User user = userRepository.findUserByUsernameAndPassword(username, password);
 		return user == null ? null : userTransformer.toDTO(user);
+	}
+
+	@Override
+	public List<StoreDTO> getAllPrefferedStores(Long id) {
+		User user = userRepository.findById(id).get();
+		List<StoreDTO> storesDto = new ArrayList<>();
+		if(user.getStores() != null && !user.getStores().isEmpty()) {
+			storesDto = storeTransformer.toDTOList(user.getStores());
+		}
+		return storesDto;
 	}
 	
 	
