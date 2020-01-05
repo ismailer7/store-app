@@ -1,10 +1,13 @@
 package com.ur.service.transformer;
 
+import org.springframework.stereotype.Component;
+
 import com.ur.domain.Store;
 import com.ur.domain.User;
 import com.ur.pojo.StoreDTO;
 import com.ur.pojo.UserDTO;
 
+@Component
 public class UserTransformer extends Transformer<User, UserDTO> {
 	
 	Transformer<Store, StoreDTO> storeTransformer;

@@ -1,9 +1,9 @@
 package com.ur.service;
 
-import com.ur.domain.User;
+import com.ur.pojo.UserDTO;
 
-public interface IUserService extends CRUDService<User, Long> {
+public interface IUserService extends CRUDService<UserDTO, Long> {
 	
-	User findUserByCredentials(String username, String password);
+	UserDTO findUserByCredentials(String username, String password);
 	
 }

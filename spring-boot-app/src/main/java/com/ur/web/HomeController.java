@@ -1,7 +1,5 @@
 package com.ur.web;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ur.domain.User;
 import com.ur.pojo.ResponseBean;
 import com.ur.pojo.SingleResponseBean;
 import com.ur.pojo.UserDTO;
@@ -49,8 +46,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/retrieve", method = RequestMethod.POST)
-	public UserDTO login(@RequestBody String username) {
-		return new UserDTO();
+	public UserDTO login(@RequestBody String username, @RequestBody String password) {
+		UserDTO user = userService.findUserByCredentials(username, password);
+		return user;
 	}
 	
 	
