@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ur.pojo.CredentialBean;
-import com.ur.pojo.ErrorResponse;
 import com.ur.pojo.ResponseBean;
 import com.ur.pojo.SingleResponseBean;
 import com.ur.pojo.UserDTO;
@@ -35,8 +34,8 @@ public class HomeController {
 	}
 
 	@GetMapping("/places")
-	public ResponseBean fetchData() {
-		return placeService.fetchPlaces();
+	public ResponseEntity<ResponseBean> fetchData() {
+		return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(), HttpStatus.OK);
 	}
 
 	@GetMapping("/place")
@@ -57,8 +56,9 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public UserDTO register(@RequestBody UserDTO user) {
-		return userService.register(user);
+	public ResponseEntity<Boolean> register(@RequestBody UserDTO user) {
+		UserDTO userDto = userService.register(user);
+		return userDto != null ? new ResponseEntity<Boolean>(true, HttpStatus.OK) : new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

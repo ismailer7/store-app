@@ -26,7 +26,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	/*
 	 * '/' permit for every one
-	 *  '/shop/**' permit for every one
+	 *  '/place/**' + /places permit for every one
 	 *  '/login' permit for every one
 	 *	'/register' permit for everyone
 	 *	/preffered/** need permission
@@ -35,7 +35,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
+		http.csrf().disable(); // disable this for post request
 		http.authorizeRequests()
 			.antMatchers("/something", "/preffered/**").hasRole("USER")
 			.antMatchers("/", "/login", "/register", "/place/**", "/places").permitAll()
