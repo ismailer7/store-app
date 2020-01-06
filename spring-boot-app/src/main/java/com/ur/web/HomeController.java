@@ -61,22 +61,26 @@ public class HomeController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<Boolean> register(@RequestBody UserDTO user) {
 		UserDTO userDto = userService.register(user);
-		return userDto != null ? new ResponseEntity<Boolean>(true, HttpStatus.OK) : new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+		return userDto != null ? new ResponseEntity<Boolean>(true, HttpStatus.OK)
+				: new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@GetMapping("/preffered")
 	public List<StoreDTO> getAllPrefferedStores(@RequestParam Long id) {
 		return userService.getAllPrefferedStores(id);
 	}
-	
+
 	@RequestMapping(value = "/add/store", method = RequestMethod.POST)
-	public void addStoreToPrefferedList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
-		userService.addToPrefferedList(id,  storeDto);
+	public ResponseEntity<String> addStoreToPrefferedList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
+		return userService.addToPrefferedList(id, storeDto) ? new ResponseEntity<String>("Store added!", HttpStatus.OK)
+				: new ResponseEntity<String>("Oops, Store was not Added!", HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/remove/store")
-	public void removeFromPreferredList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
-		userService.removeFromPreferredList(id, storeDto);
+	public ResponseEntity<String> removeFromPreferredList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
+		return userService.removeFromPreferredList(id, storeDto)
+				? new ResponseEntity<String>("removed Successfully!", HttpStatus.OK)
+				: new ResponseEntity<String>("Remove operation failed", HttpStatus.OK);
 	}
-	
+
 }

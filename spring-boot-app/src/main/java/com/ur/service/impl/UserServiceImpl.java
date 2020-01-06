@@ -74,18 +74,20 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void addToPrefferedList(Long userId, StoreDTO storeDto) {
+	public boolean addToPrefferedList(Long userId, StoreDTO storeDto) {
 		User user = userRepository.findById(userId).get();
 		Store store = storeTransformer.toEntity(storeDto);
-		user.getStores().add(store);
+		boolean added = user.getStores().add(store);
 		userRepository.save(user);
+		return added;
 	}
 
 	@Override
-	public void removeFromPreferredList(Long userId, StoreDTO store) {
+	public boolean removeFromPreferredList(Long userId, StoreDTO store) {
 		User user = userRepository.findById(userId).get();
-		user.getStores().remove(storeTransformer.toEntity(store));
+		boolean removed = user.getStores().remove(storeTransformer.toEntity(store));
 		userRepository.save(user);
+		return removed;
 	}
 	
 }

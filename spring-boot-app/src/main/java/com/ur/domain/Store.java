@@ -1,6 +1,7 @@
 package com.ur.domain;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -51,5 +54,5 @@ public class Store {
 	public List<String> getTypesList() {
 		return Arrays.asList(this.types.split(","));
 	}
-
+	
 }
