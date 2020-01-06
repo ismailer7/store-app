@@ -13,4 +13,6 @@ public interface IUserService extends CRUDService<UserDTO, Long> {
 	
 	void addToPrefferedList(Long userId, StoreDTO store);
 	
+	void removeFromPreferredList(Long userId, StoreDTO store);
+	
 }

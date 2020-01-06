@@ -80,5 +80,12 @@ public class UserServiceImpl implements IUserService {
 		user.getStores().add(store);
 		userRepository.save(user);
 	}
+
+	@Override
+	public void removeFromPreferredList(Long userId, StoreDTO store) {
+		User user = userRepository.findById(userId).get();
+		user.getStores().remove(storeTransformer.toEntity(store));
+		userRepository.save(user);
+	}
 	
 }

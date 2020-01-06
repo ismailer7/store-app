@@ -1,6 +1,7 @@
 package com.ur.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,9 +13,16 @@ import com.ur.service.IPlacesService;
 @Service
 public class PlacesServiceImpl implements IPlacesService {
 
+	@Bean
+	public RestTemplate restTemplate() {
+	    return new RestTemplate();
+	}
+	
 	@Autowired
 	private RestTemplate restTemplate;
 
+	
+	
 //	@Autowired
 //	private PlaceRepository placeRepository;
 

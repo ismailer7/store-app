@@ -69,8 +69,14 @@ public class HomeController {
 		return userService.getAllPrefferedStores(id);
 	}
 	
-	@RequestMapping(value = "/add/store")
+	@RequestMapping(value = "/add/store", method = RequestMethod.POST)
 	public void addStoreToPrefferedList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
 		userService.addToPrefferedList(id,  storeDto);
 	}
+	
+	@RequestMapping(value = "/remove/store")
+	public void removeFromPreferredList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
+		userService.removeFromPreferredList(id, storeDto);
+	}
+	
 }
