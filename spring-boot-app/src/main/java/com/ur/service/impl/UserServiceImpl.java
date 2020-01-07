@@ -23,9 +23,6 @@ public class UserServiceImpl implements IUserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private StoreRepository storeRepository;
-	
-	@Autowired
 	private Transformer<User, UserDTO> userTransformer;
 	
 	@Autowired

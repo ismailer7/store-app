@@ -1,7 +1,5 @@
 package com.ur.service.transformer;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,10 +22,10 @@ public class UserTransformer extends Transformer<User, UserDTO> {
 		userDTO.setEmail(e.getEmail());
 		userDTO.setActive(e.isActive());
 		userDTO.setGender(e.getGender());
-		if(e.getStores() != null && !e.getStores().isEmpty()) {
-			List<StoreDTO> dtoStores = storeTransformer.toDTOList(e.getStores());
-			userDTO.setStoreDTOList(dtoStores);
-		}
+//		if(e.getStores() != null && !e.getStores().isEmpty()) {
+//			List<StoreDTO> dtoStores = storeTransformer.toDTOList(e.getStores());
+//			userDTO.setStoreDTOList(dtoStores);
+//		}
 		return userDTO;
 	}
 
