@@ -11,7 +11,6 @@ import com.ur.domain.Store;
 import com.ur.domain.User;
 import com.ur.pojo.StoreDTO;
 import com.ur.pojo.UserDTO;
-import com.ur.repository.StoreRepository;
 import com.ur.repository.UserRepository;
 import com.ur.service.IUserService;
 import com.ur.service.transformer.Transformer;
@@ -71,12 +70,18 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public boolean addToPrefferedList(Long userId, StoreDTO storeDto) {
+	public UserDTO addToPrefferedList(Long userId, StoreDTO storeDto) {
 		User user = userRepository.findById(userId).get();
 		Store store = storeTransformer.toEntity(storeDto);
-		boolean added = user.getStores().add(store);
-		userRepository.save(user);
-		return added;
+		if(user.getStores() != null) {
+			user.getStores().add(store);
+		} else {
+			List<Store> stores = new ArrayList<Store>();
+			stores.add(store);
+			user.setStores(stores);
+		}
+		User retUser = userRepository.save(user);
+		return userTransformer.toDTO(retUser);
 	}
 
 	@Override

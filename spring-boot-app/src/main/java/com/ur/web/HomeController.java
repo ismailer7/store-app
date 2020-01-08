@@ -72,7 +72,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/add/store", method = RequestMethod.POST)
 	public ResponseEntity<String> addStoreToPrefferedList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
-		return userService.addToPrefferedList(id, storeDto) ? new ResponseEntity<String>("Store added!", HttpStatus.OK)
+		return userService.addToPrefferedList(id, storeDto) != null ? new ResponseEntity<String>("Store added!", HttpStatus.OK)
 				: new ResponseEntity<String>("Oops, Store was not Added!", HttpStatus.OK);
 	}
 

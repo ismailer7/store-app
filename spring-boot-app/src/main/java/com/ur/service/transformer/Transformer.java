@@ -11,11 +11,10 @@ public abstract class Transformer<E, D> {
 	public abstract E toEntity(D d);
 	
 	public List<D> toDTOList(List<E> entityList) {
-		List<D> ds = entityList.stream().map(entity -> toDTO(entity)).collect(Collectors.toList());
-		return ds;
+		return entityList != null ? entityList.stream().map(entity -> toDTO(entity)).collect(Collectors.toList()) : null;
 	}
 	
 	public List<E> toEntityList(List<D> dtoList) {
-		return dtoList.stream().map(dto -> toEntity(dto)).collect(Collectors.toList());
+		return dtoList != null ? dtoList.stream().map(dto -> toEntity(dto)).collect(Collectors.toList()) : null;
 	}
 }
