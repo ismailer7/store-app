@@ -30,8 +30,8 @@ public class UserServiceImpl implements IUserService {
 	
 	@Override
 	public UserDTO register(UserDTO userDTO) {
-		User user = userRepository.save(userTransformer.toEntity(userDTO));
-		return userTransformer.toDTO(user);
+		User user1 = userRepository.save(userTransformer.toEntity(userDTO));
+		return userTransformer.toDTO(user1);
 	}
 
 	@Override

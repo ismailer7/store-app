@@ -22,6 +22,8 @@ public class UserTransformer extends Transformer<User, UserDTO> {
 		userDTO.setEmail(e.getEmail());
 		userDTO.setActive(e.isActive());
 		userDTO.setGender(e.getGender());
+		userDTO.setPassword(e.getPassword());
+		userDTO.setRoles(e.getRoles());
 //		if(e.getStores() != null && !e.getStores().isEmpty()) {
 //			List<StoreDTO> dtoStores = storeTransformer.toDTOList(e.getStores());
 //			userDTO.setStoreDTOList(dtoStores);
@@ -38,6 +40,7 @@ public class UserTransformer extends Transformer<User, UserDTO> {
 		user.setPassword(d.getPassword());
 		user.setActive(d.isActive());
 		user.setGender(d.getGender());
+		user.setRoles(d.getRoles());
 //		user.setStores(storeTransformer.toEntityList(d.getStoreDTOList()));
 		return user;
 	}

@@ -23,6 +23,8 @@ public class UserDTO {
 	
 	private char gender;
 	
+	private String roles;
+	
 	private List<StoreDTO> storeDTOList;
 	
 }
