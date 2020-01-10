@@ -63,7 +63,6 @@ public class UserServiceImplTest {
 		user = new User(2L, "username", "password", "email@email", true, "ROLE_USER", 'M',storesTest);
 		when(mockUserRepository.findById(2L)).thenReturn(Optional.of(user));
 		when(mockUserRepository.save(user)).thenReturn(user);
-		
 	}
 	
 	@Test
@@ -125,21 +124,6 @@ public class UserServiceImplTest {
 		assertEquals(1, stores.size());
 	}
 	
-//	@Override
-//	public UserDTO addToPrefferedList(Long userId, StoreDTO storeDto) {
-//		User user = userRepository.findById(userId).get();
-//		Store store = storeTransformer.toEntity(storeDto);
-//		if(user.getStores() != null) {
-//			user.getStores().add(store);
-//		} else {
-//			List<Store> stores = new ArrayList<Store>();
-//			stores.add(store);
-//			user.setStores(stores);
-//		}
-//		User retUser = userRepository.save(user);
-//		return userTransformer.toDTO(retUser);
-//	}
-//	
 	@Test
 	public void addToPrefferedListWithEmptyStoresTest() {
 		// it will use the user define in before.
