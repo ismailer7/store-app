@@ -14,6 +14,7 @@ import com.ur.pojo.UserDTO;
 import com.ur.repository.UserRepository;
 import com.ur.service.IUserService;
 import com.ur.service.transformer.Transformer;
+import com.ur.service.transformer.UserTransformer;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -22,7 +23,7 @@ public class UserServiceImpl implements IUserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private Transformer<User, UserDTO> userTransformer;
+	private UserTransformer userTransformer;
 	
 	@Autowired
 	private Transformer<Store, StoreDTO> storeTransformer;
@@ -81,7 +82,8 @@ public class UserServiceImpl implements IUserService {
 			user.setStores(stores);
 		}
 		User retUser = userRepository.save(user);
-		return userTransformer.toDTO(retUser);
+		UserDTO retUserDto = userTransformer.toDTO(retUser, storeTransformer);
+		return retUserDto;
 	}
 
 	@Override

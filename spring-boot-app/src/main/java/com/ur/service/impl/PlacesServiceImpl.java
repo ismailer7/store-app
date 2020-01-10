@@ -1,6 +1,7 @@
 package com.ur.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,8 @@ public class PlacesServiceImpl implements IPlacesService {
 	private RestTemplate restTemplate;
 
 	
-	
-//	@Autowired
-//	private PlaceRepository placeRepository;
+	@Value("${googleapis.places.key}")
+	private String apiKey;
 
 	@Override
 	public ResponseBean fetchPlaces() {
@@ -33,10 +33,9 @@ public class PlacesServiceImpl implements IPlacesService {
 		ResponseBean responseBean = null;
 		
 		response = restTemplate.getForEntity(
-				"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.1952327,-6.152913&rankby=distance&type=store&key=AIzaSyD73W9tikguXooD_kM_VhGmh0TDMSuagHY",
+				"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.1952327,-6.152913&rankby=distance&type=store&key="+apiKey,
 				ResponseBean.class);
 		responseBean = response.getBody();
-		
 		return responseBean;
 	}
 

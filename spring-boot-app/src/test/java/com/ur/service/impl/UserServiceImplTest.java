@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -54,8 +53,17 @@ public class UserServiceImplTest {
 		Optional<User> optionalUser = Optional.of(user);
 		when(mockUserRepository.findById(1L)).thenReturn(optionalUser);
 		when(mockUserRepository.save(user)).thenReturn(user);
-		when(userTransformer.toDTO(user)).thenCallRealMethod();
-		when(userTransformer.toEntity(userTransformer.toDTO(user))).thenCallRealMethod();
+//		when(userTransformer.toDTO(user)).thenCallRealMethod();
+//		when(userTransformer.toEntity(userTransformer.toDTO(user))).thenCallRealMethod();
+	}
+	
+	public void initializeFilledStoreUser() {
+		List<Store> storesTest = new ArrayList<Store>();
+		storesTest.add(new Store(1L, "storeTest", "larache", "type1,type2,type3", "", true, 7));
+		user = new User(2L, "username", "password", "email@email", true, "ROLE_USER", 'M',storesTest);
+		when(mockUserRepository.findById(2L)).thenReturn(Optional.of(user));
+		when(mockUserRepository.save(user)).thenReturn(user);
+		
 	}
 	
 	@Test
@@ -110,21 +118,41 @@ public class UserServiceImplTest {
 	
 	@Test
 	public void getAllPrefferedStoresTestNotEmpty() {
-		List<Store> storesTest = new ArrayList<Store>();
-		storesTest.add(new Store(1L, "storeTest", "larache", "type1,type2,type3", "", true, 7));
-		user = new User(2L, "username", "password", "email@email", true, "ROLE_USER", 'M',storesTest);
-		when(mockUserRepository.findById(2L)).thenReturn(Optional.of(user));
-		when(storeTransformer.toDTOList(user.getStores())).thenCallRealMethod();
-		
+		initializeFilledStoreUser();
 		List<StoreDTO> stores = userService.getAllPrefferedStores(2L);
 		assertNotNull(stores);
 		assertFalse(stores.isEmpty());
 		assertEquals(1, stores.size());
 	}
 	
-	@Ignore
+//	@Override
+//	public UserDTO addToPrefferedList(Long userId, StoreDTO storeDto) {
+//		User user = userRepository.findById(userId).get();
+//		Store store = storeTransformer.toEntity(storeDto);
+//		if(user.getStores() != null) {
+//			user.getStores().add(store);
+//		} else {
+//			List<Store> stores = new ArrayList<Store>();
+//			stores.add(store);
+//			user.setStores(stores);
+//		}
+//		User retUser = userRepository.save(user);
+//		return userTransformer.toDTO(retUser);
+//	}
+//	
 	@Test
-	public void addToPrefferedListTest() {
-		
+	public void addToPrefferedListWithEmptyStoresTest() {
+		// it will use the user define in before.
+		UserDTO userDto = userService.addToPrefferedList(1L, new StoreDTO(1L, "storetest", "type1,type2", "", true, 5, "larache"));
+		assertNotNull(userDto);
+		assertEquals(1, userDto.getStoreDTOList().size());
+	}
+	
+	@Test
+	public void addToPrefferedListWithExistingStoresTest() {
+		initializeFilledStoreUser();
+		UserDTO userDto = userService.addToPrefferedList(2L, new StoreDTO(1L, "storetesttest", "type1,type2", "", true, 5, "larache"));
+		assertNotNull(userDto);
+		assertEquals(2, userDto.getStoreDTOList().size());
 	}
 }

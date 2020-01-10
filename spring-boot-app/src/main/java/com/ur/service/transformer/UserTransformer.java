@@ -32,6 +32,24 @@ public class UserTransformer extends Transformer<User, UserDTO> {
 		}
 		return userDTO;
 	}
+	
+	public UserDTO toDTO(User e, Transformer<Store, StoreDTO> storeTransformer) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(e.getId());
+		userDTO.setUsername(e.getUsername());
+		userDTO.setEmail(e.getEmail());
+		userDTO.setActive(e.isActive());
+		userDTO.setGender(e.getGender());
+		userDTO.setPassword(e.getPassword());
+		userDTO.setRoles(e.getRoles());
+		if(e.getStores() != null && !e.getStores().isEmpty()) {
+			List<StoreDTO> dtoStores = storeTransformer.toDTOList(e.getStores());
+			userDTO.setStoreDTOList(dtoStores);
+		}
+		return userDTO;
+	}
+	
+	
 
 	@Override
 	public User toEntity(UserDTO d) {
@@ -46,5 +64,9 @@ public class UserTransformer extends Transformer<User, UserDTO> {
 //		user.setStores(storeTransformer.toEntityList(d.getStoreDTOList()));
 		return user;
 	}
+
+
+
+	
 
 }
