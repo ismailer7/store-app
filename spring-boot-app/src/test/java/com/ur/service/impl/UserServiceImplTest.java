@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -53,8 +54,6 @@ public class UserServiceImplTest {
 		Optional<User> optionalUser = Optional.of(user);
 		when(mockUserRepository.findById(1L)).thenReturn(optionalUser);
 		when(mockUserRepository.save(user)).thenReturn(user);
-//		when(userTransformer.toDTO(user)).thenCallRealMethod();
-//		when(userTransformer.toEntity(userTransformer.toDTO(user))).thenCallRealMethod();
 	}
 	
 	public void initializeFilledStoreUser() {
@@ -127,7 +126,9 @@ public class UserServiceImplTest {
 	@Test
 	public void addToPrefferedListWithEmptyStoresTest() {
 		// it will use the user define in before.
-		UserDTO userDto = userService.addToPrefferedList(1L, new StoreDTO(1L, "storetest", "type1,type2", "", true, 5, "larache"));
+		List<String> types = new ArrayList<>();
+		types.add("type1");
+		UserDTO userDto = userService.addToPrefferedList(1L, new StoreDTO("aszae", "storetest", types, "", true, 5, "larache"));
 		assertNotNull(userDto);
 		assertEquals(1, userDto.getStoreDTOList().size());
 	}
@@ -135,7 +136,9 @@ public class UserServiceImplTest {
 	@Test
 	public void addToPrefferedListWithExistingStoresTest() {
 		initializeFilledStoreUser();
-		UserDTO userDto = userService.addToPrefferedList(2L, new StoreDTO(1L, "storetesttest", "type1,type2", "", true, 5, "larache"));
+		List<String> types = new ArrayList<>();
+		types.add("type1");
+		UserDTO userDto = userService.addToPrefferedList(2L, new StoreDTO("isqtore", "storetesttest", types, "", true, 5, "larache"));
 		assertNotNull(userDto);
 		assertEquals(2, userDto.getStoreDTOList().size());
 	}

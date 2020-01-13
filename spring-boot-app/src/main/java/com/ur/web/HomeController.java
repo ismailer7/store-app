@@ -21,7 +21,7 @@ import com.ur.pojo.UserDTO;
 import com.ur.service.IPlacesService;
 import com.ur.service.IUserService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 public class HomeController {
 
@@ -48,10 +48,10 @@ public class HomeController {
 
 	@GetMapping("/something")
 	public String unauthorizedPoint() {
-		return "this need to be authorized";
+		return "Hi ther you're authorized!";
 	}
 
-	@RequestMapping(value = "/retrieve", method = RequestMethod.POST)
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<Object> login(@RequestBody CredentialBean bean) {
 		UserDTO user = userService.findUserByCredentials(bean.getUsername(), bean.getPassword());
 		return (user == null) ? new ResponseEntity<>("Invalid Credentials!", HttpStatus.BAD_REQUEST)

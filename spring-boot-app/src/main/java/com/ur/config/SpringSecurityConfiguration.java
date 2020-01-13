@@ -35,8 +35,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable(); // disable this for post request
-		http.authorizeRequests()
+		// disable this for post request
+		http.csrf().disable();
+		http.cors().and().authorizeRequests()
 			.antMatchers("/something", "/preffered/**", "/add/**").hasRole("USER")
 			.antMatchers("/", "/login", "/register", "/place/**", "/places").permitAll()
 			.and()

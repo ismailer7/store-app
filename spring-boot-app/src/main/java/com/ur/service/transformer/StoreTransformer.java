@@ -10,29 +10,25 @@ public class StoreTransformer extends Transformer<Store, StoreDTO>{
 
 	@Override
 	public StoreDTO toDTO(Store e) {
-		StoreDTO dtoStore = new StoreDTO(
-				e.getId(),
-				e.getName(),
-				e.getTypes(),
-				e.getIcon(),
-				e.isOpen(),
-				e.getRating(),
-				e.getVicinity()
-		);
+		StoreDTO dtoStore = new StoreDTO();
+		dtoStore.setIcon(e.getIcon());
+		dtoStore.setName(e.getName());
+		dtoStore.setTypes(e.getTypesList());
+		dtoStore.setOpen(e.isOpen());
+		dtoStore.setRate(e.getRating());
+		dtoStore.setVicinity(e.getVicinity());
 		return dtoStore;
 	}
 
 	@Override
 	public Store toEntity(StoreDTO d) {
-		Store store = new Store(
-				d.getId(),
-				d.getName(),
-				d.getVicinity(),
-				d.getTypes(),
-				d.getIcon(),
-				d.isOpen(),
-				d.getRate()
-		);
+		Store store = new Store();
+		store.setName(d.getName());
+		store.setIcon(d.getIcon());
+		store.setTypes(String.join(",", d.getTypes()));
+		store.setOpen(d.isOpen());
+		store.setRating(d.getRate());
+		store.setVicinity(d.getVicinity());
 		return store;
 	}
 
