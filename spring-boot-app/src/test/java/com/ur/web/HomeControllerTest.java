@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RunWith(SpringRunner.class)
 @ComponentScan(basePackages = {"com.ur"}) 
@@ -29,4 +30,10 @@ public class HomeControllerTest {
 		this.mockMvc.perform(get("/hi")).andDo(print()).andExpect(status().isOk())
 		.andExpect(content().string(containsString("Hello over there!")));
 	}
+	
+	@Test
+	public void testUnauthorizedPoint() throws Exception {
+		this.mockMvc.perform(get("/something")).andDo(print()).andExpect(status().isUnauthorized());
+	}
+	
 }
