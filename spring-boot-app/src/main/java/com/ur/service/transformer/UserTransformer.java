@@ -16,6 +16,11 @@ public class UserTransformer extends Transformer<User, UserDTO> {
 	@Autowired
 	Transformer<Store, StoreDTO> storeTransformer;
 	
+	/**
+	 * Convert User Entity to user DTO
+	 * @param e a user entity
+	 * @return UserDTO
+	 */
 	@Override
 	public UserDTO toDTO(User e) {
 		UserDTO userDTO = new UserDTO();
@@ -33,6 +38,9 @@ public class UserTransformer extends Transformer<User, UserDTO> {
 		return userDTO;
 	}
 	
+	/**
+	 * Convert User DTO to user Entity
+	 */
 	public UserDTO toDTO(User e, Transformer<Store, StoreDTO> storeTransformer) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setId(e.getId());

@@ -42,6 +42,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/", "/login", "/register", "/place/**", "/places").permitAll()
 			.and()
 			.httpBasic();
+		http.headers().frameOptions().sameOrigin();
 	}
 	
 	@Bean

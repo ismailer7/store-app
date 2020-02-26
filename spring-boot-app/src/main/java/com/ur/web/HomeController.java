@@ -48,7 +48,7 @@ public class HomeController {
 
 	@GetMapping("/something")
 	public String unauthorizedPoint() {
-		return "Hi ther you're authorized!";
+		return "Hi there you're authorized!";
 	}
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)

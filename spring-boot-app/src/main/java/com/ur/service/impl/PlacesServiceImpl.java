@@ -26,6 +26,11 @@ public class PlacesServiceImpl implements IPlacesService {
 	@Value("${googleapis.places.key}")
 	private String apiKey;
 
+	
+	/**
+	 * this method fetch places from the google api
+	 * @return an object that present the data gathered from the api
+	 */
 	@Override
 	public ResponseBean fetchPlaces() {
 		
@@ -38,7 +43,12 @@ public class PlacesServiceImpl implements IPlacesService {
 		responseBean = response.getBody();
 		return responseBean;
 	}
-
+	
+	/**
+	 * fetch only one place based on his id
+	 * @param placeID the ID of the place
+	 * @return the object that represent the place
+	 */
 	@Override
 	public SingleResponseBean fetchOnePlace(String placeID) {
 		ResponseEntity<SingleResponseBean> response = restTemplate.getForEntity("https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeID+"&key=AIzaSyD73W9tikguXooD_kM_VhGmh0TDMSuagHY", SingleResponseBean.class);
