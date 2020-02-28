@@ -53,6 +53,9 @@ public class User {
 	@JoinTable(name = "user_store", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "store_id") })
 	private List<Store> stores;
 	
+	@Column
+	private String icon;
+	
 	@Transient
 	public List<String> getRolesList() {
 		return Arrays.asList(getRoles().split(","));

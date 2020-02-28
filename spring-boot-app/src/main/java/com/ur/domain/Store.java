@@ -50,6 +50,9 @@ public class Store {
 	@ColumnDefault("0")
 	private int rating;
 	
+	@Column(nullable = false, columnDefinition = "tinyint default false")
+	private boolean status;
+	
 	@Transient
 	public List<String> getTypesList() {
 		return Arrays.asList(this.types.split(","));

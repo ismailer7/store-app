@@ -49,7 +49,7 @@ public class UserServiceImplTest {
 	
 	@BeforeEach
 	public void setUp() {
-		user = new User(1L, "username", "password", "email@email", true, "ROLE_USER", 'M', null);
+		user = new User(1L, "username", "password", "email@email", true, "ROLE_USER", 'M', null, "");
 		Optional<User> optionalUser = Optional.of(user);
 		when(mockUserRepository.findById(1L)).thenReturn(optionalUser);
 		when(mockUserRepository.save(user)).thenReturn(user);
@@ -57,8 +57,8 @@ public class UserServiceImplTest {
 	
 	public void initializeFilledStoreUser() {
 		List<Store> storesTest = new ArrayList<Store>();
-		storesTest.add(new Store(1L, "storeTest", "larache", "type1,type2,type3", "", true, 7));
-		user = new User(2L, "username", "password", "email@email", true, "ROLE_USER", 'M',storesTest);
+		storesTest.add(new Store(1L, "storeTest", "larache", "type1,type2,type3", "", true, 7, false));
+		user = new User(2L, "username", "password", "email@email", true, "ROLE_USER", 'M',storesTest, "");
 		when(mockUserRepository.findById(2L)).thenReturn(Optional.of(user));
 		when(mockUserRepository.save(user)).thenReturn(user);
 	}
