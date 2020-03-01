@@ -32,6 +32,9 @@ public class Store {
 	@Column(name = "store_id", nullable = false, unique = true)
 	private Long id;
 
+	@Column
+	private String storeID;
+	
 	@Column(nullable = false, length = 30)
 	private String name;
 

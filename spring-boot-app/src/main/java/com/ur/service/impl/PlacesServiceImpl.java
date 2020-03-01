@@ -54,5 +54,5 @@ public class PlacesServiceImpl implements IPlacesService {
 		ResponseEntity<SingleResponseBean> response = restTemplate.getForEntity("https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeID+"&key=AIzaSyD73W9tikguXooD_kM_VhGmh0TDMSuagHY", SingleResponseBean.class);
 		return response.getBody();
 	}
-
+	
 }

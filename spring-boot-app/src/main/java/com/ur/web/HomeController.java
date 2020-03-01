@@ -82,5 +82,9 @@ public class HomeController {
 				? new ResponseEntity<String>("removed Successfully!", HttpStatus.OK)
 				: new ResponseEntity<String>("Remove operation failed", HttpStatus.OK);
 	}
+	
+	private void filterRemovedStores(Long userID, String storeID) {
+		
+	}
 
 }
