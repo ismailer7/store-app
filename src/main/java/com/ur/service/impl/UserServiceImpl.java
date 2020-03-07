@@ -186,5 +186,4 @@ public class UserServiceImpl implements IUserService {
 		storeRepository.save(store);
 		return storeTransformer.toDTO(store);
 	}
-	
 }
