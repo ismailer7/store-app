@@ -1,5 +1,6 @@
 package com.ur.pojo;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -24,5 +25,7 @@ public class StoreDTO {
 	private int rate;
 	
 	private String vicinity;
+	
+	private Date lastAction;
 	
 }

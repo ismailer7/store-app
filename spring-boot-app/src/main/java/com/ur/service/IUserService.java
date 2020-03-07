@@ -9,10 +9,15 @@ public interface IUserService extends CRUDService<UserDTO, Long> {
 	
 	UserDTO findUserByCredentials(String username, String password);
 	
+	List<StoreDTO> getAllAvailableStores(Long userID);
+	
+	void addToAvailableStores(Long userID, StoreDTO store);
+	
 	List<StoreDTO> getAllPrefferedStores(Long id);
 	
-	UserDTO addToPrefferedList(Long userId, StoreDTO store);
+	StoreDTO addToPrefferedList(Long userId, Long storeId);
 	
-	boolean removeFromPreferredList(Long userId, StoreDTO store);
+	StoreDTO removeFromPreferredList(Long userId, Long storeId);
 	
+	StoreDTO removeFromNearby(Long userId, Long storeId);
 }

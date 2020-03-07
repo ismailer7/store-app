@@ -1,6 +1,8 @@
 package com.ur.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +13,7 @@ import com.ur.domain.Store;
 import com.ur.domain.User;
 import com.ur.pojo.StoreDTO;
 import com.ur.pojo.UserDTO;
+import com.ur.repository.StoreRepository;
 import com.ur.repository.UserRepository;
 import com.ur.service.IUserService;
 import com.ur.service.transformer.Transformer;
@@ -21,6 +24,9 @@ public class UserServiceImpl implements IUserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private StoreRepository storeRepository;
 	
 	@Autowired
 	private UserTransformer userTransformer;
@@ -95,10 +101,11 @@ public class UserServiceImpl implements IUserService {
 	 */
 	@Override
 	public List<StoreDTO> getAllPrefferedStores(Long id) {
-		User user = userRepository.findById(id).get();
+//		User user = userRepository.findById(id).get();
+		List<Store> preferredStores = userRepository.getAllPreferredStores(id);
 		List<StoreDTO> storesDto = new ArrayList<>();
-		if(user.getStores() != null && !user.getStores().isEmpty()) {
-			storesDto = storeTransformer.toDTOList(user.getStores());
+		if(preferredStores != null && !preferredStores.isEmpty()) {
+			storesDto = storeTransformer.toDTOList(preferredStores);
 		}
 		return storesDto;
 	}
@@ -108,21 +115,28 @@ public class UserServiceImpl implements IUserService {
 	 * @param userId The user id
 	 * @param storeDto the store to be added to preferred list
 	 * @return the user DTO
+	 * @throws ParseException 
 	 */
 	@Override
-	public UserDTO addToPrefferedList(Long userId, StoreDTO storeDto) {
-		User user = userRepository.findById(userId).get();
-		Store store = storeTransformer.toEntity(storeDto);
-		if(user.getStores() != null) {
-			user.getStores().add(store);
-		} else {
-			List<Store> stores = new ArrayList<Store>();
-			stores.add(store);
-			user.setStores(stores);
-		}
-		User retUser = userRepository.save(user);
-		UserDTO retUserDto = userTransformer.toDTO(retUser, storeTransformer);
-		return retUserDto;
+	public StoreDTO addToPrefferedList(Long userId, Long storeId) {
+		Store store = userRepository.getStoreById(userId, storeId);
+		
+//		Store store = storeTransformer.toEntity(storeDto);
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+//		store.setLastAction(
+//				simpleDateFormat
+//				    .parse(simpleDateFormat.format(new Date())));
+		store.setLastAction(new Date());
+		store.setStatus(1);
+//		if(user.getStores() != null) {
+//			user.getStores().add(store);
+//		} else {
+//			List<Store> stores = new ArrayList<Store>();
+//			stores.add(store);
+//			user.setStores(stores);
+//		}
+		storeRepository.save(store);
+		return storeTransformer.toDTO(store);
 	}
 	
 	/**
@@ -132,11 +146,45 @@ public class UserServiceImpl implements IUserService {
 	 * @return the status of the remove action
 	 */
 	@Override
-	public boolean removeFromPreferredList(Long userId, StoreDTO store) {
+	public StoreDTO removeFromPreferredList(Long userId, Long storeId) {
+		Store store = userRepository.getStoreById(userId, storeId);
+		store.setLastAction(new Date());
+		store.setStatus(0);
+		storeRepository.save(store);
+		return storeTransformer.toDTO(store);
+	}
+
+
+	@Override
+	public List<StoreDTO> getAllAvailableStores(Long userId) {
 		User user = userRepository.findById(userId).get();
-		boolean removed = user.getStores().remove(storeTransformer.toEntity(store));
+		List<Store> stores = user.getStores();
+		return storeTransformer.toDTOList(stores);
+	}
+
+
+	@Override
+	public void addToAvailableStores(Long userId, StoreDTO storeDto) {
+		User user = userRepository.findById(userId).get();
+		Store store = storeTransformer.toEntity(storeDto);
+		if (user.getStores() != null) {
+			user.getStores().add(store);
+		} else {
+			List<Store> stores = new ArrayList<Store>();
+			stores.add(store);
+			user.setStores(stores);
+		}
 		userRepository.save(user);
-		return removed;
+	}
+
+
+	@Override
+	public StoreDTO removeFromNearby(Long userId, Long storeId) {
+		Store store = userRepository.getStoreById(userId, storeId);
+		store.setLastAction(new Date());
+		store.setStatus(-1);
+		storeRepository.save(store);
+		return storeTransformer.toDTO(store);
 	}
 	
 }

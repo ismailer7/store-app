@@ -17,6 +17,7 @@ public class StoreTransformer extends Transformer<Store, StoreDTO>{
 		dtoStore.setOpen(e.isOpen());
 		dtoStore.setRate(e.getRating());
 		dtoStore.setVicinity(e.getVicinity());
+		dtoStore.setLastAction(e.getLastAction());
 		return dtoStore;
 	}
 
@@ -29,6 +30,7 @@ public class StoreTransformer extends Transformer<Store, StoreDTO>{
 		store.setOpen(d.isOpen());
 		store.setRating(d.getRate());
 		store.setVicinity(d.getVicinity());
+		store.setLastAction(d.getLastAction());
 		return store;
 	}
 

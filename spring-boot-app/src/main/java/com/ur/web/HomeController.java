@@ -1,5 +1,6 @@
 package com.ur.web;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,20 @@ public class HomeController {
 		return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(), HttpStatus.OK);
 	}
 
+	@GetMapping("/getPlaces")
+	public ResponseEntity<ResponseBean> fetchDataAuthenticated(@RequestParam Long userId) throws ParseException {
+		if (userService.getAllAvailableStores(userId).isEmpty()) {
+			List<StoreDTO> stores = placeService.fetchPlaces().getResults();
+			for (StoreDTO store : stores) {
+				userService.addToAvailableStores(userId, store);
+			}
+			return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResponseBean>(placeService.fetchUnremovedPlaces(userId), HttpStatus.OK);
+		}
+
+	}
+
 	@GetMapping("/place")
 	public SingleResponseBean getStoreBeanByPlace(@RequestParam String placeID) {
 		return placeService.fetchOnePlace(placeID);
@@ -65,26 +80,31 @@ public class HomeController {
 				: new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@GetMapping("/preffered")
+	@GetMapping("/preffered/show")
 	public List<StoreDTO> getAllPrefferedStores(@RequestParam Long id) {
 		return userService.getAllPrefferedStores(id);
 	}
 
-	@RequestMapping(value = "/add/store", method = RequestMethod.POST)
-	public ResponseEntity<String> addStoreToPrefferedList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
-		return userService.addToPrefferedList(id, storeDto) != null ? new ResponseEntity<String>("Store added!", HttpStatus.OK)
+	@RequestMapping(value = "/preferred/add", method = RequestMethod.POST)
+	public ResponseEntity<String> addStoreToPrefferedList(@RequestParam Long id, @RequestParam Long storeId)
+			throws ParseException {
+		return userService.addToPrefferedList(id, storeId) != null
+				? new ResponseEntity<String>("Store added!", HttpStatus.OK)
 				: new ResponseEntity<String>("Oops, Store was not Added!", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/remove/store")
-	public ResponseEntity<String> removeFromPreferredList(@RequestParam Long id, @RequestBody StoreDTO storeDto) {
-		return userService.removeFromPreferredList(id, storeDto)
-				? new ResponseEntity<String>("removed Successfully!", HttpStatus.OK)
+	@RequestMapping(value = "/preferred/remove")
+	public ResponseEntity<String> removeFromPreferredList(@RequestParam Long id, @RequestParam Long storeId) {
+		return userService.removeFromPreferredList(id, storeId) != null
+				? new ResponseEntity<String>("removed Successfully From Preferred List!", HttpStatus.OK)
 				: new ResponseEntity<String>("Remove operation failed", HttpStatus.OK);
 	}
-	
-	private void filterRemovedStores(Long userID, String storeID) {
-		
+
+	@RequestMapping("/nearby/remove")
+	public ResponseEntity<String> removeFromNearby(@RequestParam Long userId, @RequestParam Long storeId) {
+		return userService.removeFromNearby(userId, storeId) != null
+				? new ResponseEntity<String>("removed From Nearby", HttpStatus.OK)
+				: new ResponseEntity<String>("removed Operation Failed!", HttpStatus.OK);
 	}
 
 }

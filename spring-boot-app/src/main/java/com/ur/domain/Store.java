@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,8 +54,12 @@ public class Store {
 	@ColumnDefault("0")
 	private int rating;
 	
-	@Column(nullable = false, columnDefinition = "tinyint default false")
-	private boolean status;
+	@Column(nullable = false)
+	private int status;
+	
+	@Basic
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastAction;
 	
 	@Transient
 	public List<String> getTypesList() {
