@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ur.pojo.Bean;
 import com.ur.pojo.CredentialBean;
 import com.ur.pojo.ResponseBean;
 import com.ur.pojo.SingleResponseBean;
@@ -42,30 +43,16 @@ public class HomeController {
 		return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(), HttpStatus.OK);
 	}
 
-	@GetMapping("/getPlaces")
-	public ResponseEntity<ResponseBean> fetchDataAuthenticated(@RequestParam Long userId) throws ParseException {
-		if (userService.getAllAvailableStores(userId).isEmpty()) {
-			List<StoreDTO> stores = placeService.fetchPlaces().getResults();
-			for (StoreDTO store : stores) {
-				userService.addToAvailableStores(userId, store);
-			}
-			return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<ResponseBean>(placeService.fetchUnremovedPlaces(userId), HttpStatus.OK);
-		}
-
-	}
-
 	@GetMapping("/place")
-	public SingleResponseBean getStoreBeanByPlace(@RequestParam String placeID) {
-		return placeService.fetchOnePlace(placeID);
+	public SingleResponseBean getStoreBeanByPlace(@RequestParam String placeId) {
+		return placeService.fetchOnePlace(placeId);
 	}
 
 	@GetMapping("/something")
 	public String unauthorizedPoint() {
 		return "Hi there you're authorized!";
 	}
-
+	
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<Object> login(@RequestBody CredentialBean bean) {
 		UserDTO user = userService.findUserByCredentials(bean.getUsername(), bean.getPassword());
@@ -79,32 +66,45 @@ public class HomeController {
 		return userDto != null ? new ResponseEntity<Boolean>(true, HttpStatus.OK)
 				: new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@GetMapping("/user/getPlaces")
+	public ResponseEntity<ResponseBean> fetchDataAuthenticated(@RequestParam Long userId) throws ParseException {
+		if (userService.getAllAvailableStores(userId).isEmpty()) {
+			List<StoreDTO> stores = placeService.fetchPlaces().getResults();
+			for (StoreDTO store : stores) {
+				userService.addToAvailableStores(userId, store);
+			}
+			return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResponseBean>(placeService.fetchUnremovedPlaces(userId), HttpStatus.OK);
+		}
 
-	@GetMapping("/preffered/show")
-	public List<StoreDTO> getAllPrefferedStores(@RequestParam Long id) {
-		return userService.getAllPrefferedStores(id);
+	}
+
+	@GetMapping("/preferred/show")
+	public List<StoreDTO> getAllPrefferedStores(@RequestParam Long userId) {
+		return userService.getAllPrefferedStores(userId);
 	}
 
 	@RequestMapping(value = "/preferred/add", method = RequestMethod.POST)
-	public ResponseEntity<String> addStoreToPrefferedList(@RequestParam Long id, @RequestParam Long storeId)
+	public ResponseEntity<String> addStoreToPrefferedList(@RequestBody Bean bean)
 			throws ParseException {
-		return userService.addToPrefferedList(id, storeId) != null
+		return userService.addToPrefferedList(bean.getUserId(), bean.getStoreId()) != null
 				? new ResponseEntity<String>("Store added!", HttpStatus.OK)
 				: new ResponseEntity<String>("Oops, Store was not Added!", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/preferred/remove")
-	public ResponseEntity<String> removeFromPreferredList(@RequestParam Long id, @RequestParam Long storeId) {
-		return userService.removeFromPreferredList(id, storeId) != null
+	public ResponseEntity<String> removeFromPreferredList(@RequestBody Bean bean) {
+		return userService.removeFromPreferredList(bean.getUserId(), bean.getStoreId()) != null
 				? new ResponseEntity<String>("removed Successfully From Preferred List!", HttpStatus.OK)
 				: new ResponseEntity<String>("Remove operation failed", HttpStatus.OK);
 	}
 
 	@RequestMapping("/nearby/remove")
-	public ResponseEntity<String> removeFromNearby(@RequestParam Long userId, @RequestParam Long storeId) {
-		return userService.removeFromNearby(userId, storeId) != null
+	public ResponseEntity<String> removeFromNearby(@RequestBody Bean bean) {
+		return userService.removeFromNearby(bean.getUserId(), bean.getStoreId()) != null
 				? new ResponseEntity<String>("removed From Nearby", HttpStatus.OK)
 				: new ResponseEntity<String>("removed Operation Failed!", HttpStatus.OK);
 	}
-
 }

@@ -11,6 +11,7 @@ public class StoreTransformer extends Transformer<Store, StoreDTO>{
 	@Override
 	public StoreDTO toDTO(Store e) {
 		StoreDTO dtoStore = new StoreDTO();
+		dtoStore.setStoreId(e.getId());
 		dtoStore.setIcon(e.getIcon());
 		dtoStore.setName(e.getName());
 		dtoStore.setTypes(e.getTypesList());

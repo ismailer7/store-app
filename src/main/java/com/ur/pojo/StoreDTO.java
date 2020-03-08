@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class StoreDTO {
+
+	private Long storeId;
 	
 	private String id;
 	

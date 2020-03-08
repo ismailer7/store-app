@@ -30,6 +30,14 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 *  '/login' permit for every one
 	 *	'/register' permit for everyone
 	 *	/preffered/** need permission
+	 *
+	 *	need permission:
+	 *	/something
+	 *  /user/getPlaces
+	 *  /preferred/show 
+	 *  /preferred/add 
+	 *  /preferred/remove 
+	 *  /nearby/remove
 	 */
 	
 	
@@ -38,11 +46,11 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// disable this for post request
 		http.csrf().disable();
 		http.cors().and().authorizeRequests()
-			.antMatchers("/something", "/preffered/**", "/add/**").hasRole("USER")
-			.antMatchers("/", "/login", "/register", "/place/**", "/places").permitAll()
+			.antMatchers("/something", "/preferred/**", "/nearby/**").hasRole("USER")
+			.antMatchers("/", "/authenticate", "/register", "/place/**", "/places").permitAll()
 			.and()
 			.httpBasic();
-		http.headers().frameOptions().sameOrigin(); // for h2 gui
+		http.headers().frameOptions().sameOrigin(); // for h2 GUI
 	}
 	
 	@Bean

@@ -17,5 +17,4 @@ public interface PlaceRepository extends JpaRepository<Store, Long> {
 			@Param("userId") Long userId,
 			@Param("beforeTwoHours") Date twoHourBack
 	);
-	
 }

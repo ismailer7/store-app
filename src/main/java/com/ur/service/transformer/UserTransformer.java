@@ -73,8 +73,4 @@ public class UserTransformer extends Transformer<User, UserDTO> {
 		return user;
 	}
 
-
-
-	
-
 }
