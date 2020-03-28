@@ -34,9 +34,9 @@ public class Store {
 	private Long id;
 
 	@Column
-	private String storeID;
+	private String placeId;
 	
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 200)
 	private String name;
 
 	@Column(nullable = false)

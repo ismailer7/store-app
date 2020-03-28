@@ -19,8 +19,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseBean {
 	
-	private String next_page_token;
-	
 	private List<StoreDTO> results;
 	
 	

@@ -7,7 +7,7 @@ import com.ur.pojo.SingleResponseBean;
 
 public interface IPlacesService {
 	
-	ResponseBean fetchPlaces();
+	ResponseBean fetchPlaces(String latitude, String longitude);
 	
 //	boolean addPlaceToPrefferedList(StoreBean store);
 	

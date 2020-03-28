@@ -43,15 +43,13 @@ public class PlacesServiceImpl implements IPlacesService {
 	 * @return an object that present the data gathered from the api
 	 */
 	@Override
-	public ResponseBean fetchPlaces() {
+	public ResponseBean fetchPlaces(String latitude, String longitude) {
 
 		ResponseEntity<ResponseBean> response = null;
 		ResponseBean responseBean = null;
 
-		response = restTemplate.getForEntity(
-				"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.1952327,-6.152913&rankby=distance&type=store&key="
-						+ apiKey,
-				ResponseBean.class);
+		response = restTemplate.getForEntity("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
+				+ latitude + "," + longitude + "&rankby=distance&type=store&key=" + apiKey, ResponseBean.class);
 		responseBean = response.getBody();
 		return responseBean;
 	}

@@ -14,7 +14,7 @@ public class StoreDTO {
 
 	private Long storeId;
 	
-	private String id;
+	private String place_id;
 	
 	private String name;
 	
@@ -24,7 +24,7 @@ public class StoreDTO {
 	
 	private boolean open;
 	
-	private int rate;
+	private int rating;
 	
 	private String vicinity;
 	

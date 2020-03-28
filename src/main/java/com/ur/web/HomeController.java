@@ -39,8 +39,8 @@ public class HomeController {
 	}
 
 	@GetMapping("/places")
-	public ResponseEntity<ResponseBean> fetchData() {
-		return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(), HttpStatus.OK);
+	public ResponseEntity<ResponseBean> fetchData(@RequestParam String latitude, @RequestParam String longitude) {
+		return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(latitude, longitude), HttpStatus.OK);
 	}
 
 	@GetMapping("/place")
@@ -69,15 +69,15 @@ public class HomeController {
 	
 	@GetMapping("/user/getPlaces")
 	public ResponseEntity<ResponseBean> fetchDataAuthenticated(@RequestParam Long userId) throws ParseException {
-		if (userService.getAllAvailableStores(userId).isEmpty()) {
-			List<StoreDTO> stores = placeService.fetchPlaces().getResults();
-			for (StoreDTO store : stores) {
-				userService.addToAvailableStores(userId, store);
-			}
-			return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(), HttpStatus.OK);
-		} else {
+//		if (userService.getAllAvailableStores(userId).isEmpty()) {
+//			List<StoreDTO> stores = placeService.fetchPlaces(latitude, longitude).getResults();
+//			for (StoreDTO store : stores) {
+//				userService.addToAvailableStores(userId, store);
+//			}
+//			return new ResponseEntity<ResponseBean>(placeService.fetchPlaces(latitude, longitude), HttpStatus.OK);
+//		} else {
 			return new ResponseEntity<ResponseBean>(placeService.fetchUnremovedPlaces(userId), HttpStatus.OK);
-		}
+//		}
 
 	}
 
